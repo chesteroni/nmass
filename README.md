@@ -27,8 +27,9 @@ Running all the plugins on the file.xml piped to the nmass
 ```
 cat file.xml | python nmass.py
 ```
+Do not forget to configure plugins to match the scanned target.
 
-Running all the classes of mysql, spoof and relay classes from smtp and all the classes from ssh module. Output results (if any) in CSV format.
+Running all the classes of mysql, spoof and relay classes from smtp and all the classes from (not yet existing) ssh module. Output results (if any) in CSV format.
 ```
 python nmass.py --inmass=/path/to/file --intype=xml --scripts=mysql,smtp/spoof,smtp/relay,ssh --out=csv
 ```
