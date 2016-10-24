@@ -41,9 +41,10 @@ class Nmass_mysql(Script):
                     return r
         return r
     
-    def conn(self, host, port,user, passwd):
+
+    def conn(self, host, port, user, passwd):
         try:
-            c = MySQLdb.connect(host, user, passwd)
+            c = MySQLdb.connect(host, user, passwd, '', port)
         except _mysql_exceptions.OperationalError:
             return False
         c.close()
