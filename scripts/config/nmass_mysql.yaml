@@ -1,7 +1,7 @@
 users:
-    root:
-        type: "dictionary"
-        file: "scripts/config/nmass_mysql.dict"
-    chester:
-        type: "dictionary"
-        pass: "chester,test,,foo,bar.8,a,,"
+  root:
+    type: "dictionary"
+    file: "scripts/config/nmass_mysql.dict"
+  chester:
+    type: "dictionary"
+    pass: "chester,test,,foo,bar.8,a,,"

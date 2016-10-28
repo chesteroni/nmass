@@ -1,27 +1,25 @@
-from helpers.script import Script
-import sys
 import smtplib
 import socket
-from helpers.result import Result
-from tribool import Tribool
+import sys
 from email.mime.text import MIMEText
+
+from tribool import Tribool
+
+from helpers.result import Result
+from helpers.script import Script
 
 
 class Nmass_smtp(Script):
-
-
     def assess_finding(self):
         if self.finding['port'] == 25:
             return True
         return False
 
-
-    def enumerate(self,finding):
-        super(Nmass_smtp,self).enumerate(finding)
+    def enumerate(self, finding):
+        super(Nmass_smtp, self).enumerate(finding)
         return False
 
-
-    def send(self,msg,address,sender,receiver):
+    def send(self, msg, address, sender, receiver):
         # Send the message via our own SMTP server, but don't include the
         # envelope header.
         try:
@@ -29,7 +27,7 @@ class Nmass_smtp(Script):
             s.sendmail(sender, receiver, msg.as_string())
             s.quit()
             return Tribool(None)
-        except smtplib.SMTPRecipientsRefused: 
+        except smtplib.SMTPRecipientsRefused:
             return False
             pass
         except smtplib.SMTPServerDisconnected:
@@ -41,7 +39,7 @@ class Nmass_smtp(Script):
 
 
 class Spoof(Nmass_smtp):
-    def enumerate(self,finding):
+    def enumerate(self, finding):
         check = super(Nmass_smtp, self).enumerate(finding)
         if check is False:
             return False
@@ -65,9 +63,7 @@ class Spoof(Nmass_smtp):
 
 
 class Relay(Nmass_smtp):
-
-
-    def enumerate(self,finding):
+    def enumerate(self, finding):
         check = super(Nmass_smtp, self).enumerate(finding)
         if check is False:
             return False

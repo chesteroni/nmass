@@ -1,10 +1,11 @@
-import click
-import sys
-import os
-from scripts.helpers import finding
 import importlib
+import os
+import sys
+
+import click
+
+from scripts.helpers import finding
 from scripts.helpers.script_helper import get_scripts
-from tribool import Tribool
 
 sys.path.append("scripts")
 
@@ -29,11 +30,12 @@ def get_file(inmass):
 
 @click.command()
 @click.pass_context
-@click.option('--inmass', default = sys.stdin, type = click.STRING, help = INMASS_HELP)
-@click.option('--scripts', default = "all", type = click.STRING, help = SCRIPTS_HELP)
-@click.option('--intype', default = "xml", type = click.Choice(['xml', 'grep']), help = INTYPE_HELP)
-@click.option('--out', default = "string", type = click.Choice(['string', 'csv']), help = OUT_HELP)
-@click.option('--ignoresaved', default = "no", type = click.Choice(['yes', 'no']), help = IGNORE_SAVED_HELP)
+@click.option('--inmass', default=sys.stdin, type=click.STRING, help=INMASS_HELP)
+@click.option('--scripts', default="all", type=click.STRING, help=SCRIPTS_HELP)
+@click.option('--intype', default="xml", type=click.Choice(['xml', 'grep']), help=INTYPE_HELP)
+@click.option('--out', default="string", type=click.Choice(['string', 'csv']), help=OUT_HELP)
+@click.option('--ignoresaved', default="no", type=click.Choice(['yes', 'no']),
+              help=IGNORE_SAVED_HELP)
 def sectest(
         ctx,
         inmass,
@@ -41,7 +43,6 @@ def sectest(
         intype,
         out,
         ignoresaved):
-
     if ignoresaved == "yes":
         delete_state_file()
 
@@ -57,7 +58,6 @@ def sectest(
         scripts = state_content[5]
         intype = state_content[6]
         out = state_content[7]
-        
 
     fp = get_file(inmass)
     f_helper = finding.Finding_helper()
@@ -73,23 +73,27 @@ def sectest(
         print ("grep format is not yet supported")
         sys.exit()
 
-    #Main loop: for each script: for each finding: enumerate()!
+    # Main loop: for each script: for each finding: enumerate()!
     for script in scripts_to_import:
-        if not isinstance(script,list):
+        if not isinstance(script, list):
             print("Invalid script given, ignoring: %s" % str(script))
             continue
         module = script[0]
         classname = script[1][0].upper() + script[1][1:]
-        if len(state_content) == 8 and (state_content[0] != module or state_content[1] != classname):
+        if len(state_content) == 8 and (
+                        state_content[0] != module or state_content[1] != classname):
             continue;
         try:
             m = importlib.import_module(module, classname)
-            obj = getattr(m,classname)()
+            obj = getattr(m, classname)()
             for f in findings:
-                if len(state_content) == 8 and (state_content[2] != str(f['port']) or state_content[3] != f['address']):
+                if len(state_content) == 8 and (
+                                state_content[2] != str(f['port']) or state_content[3] != f[
+                            'address']):
                     continue
                 state = open(NMASS_STATE_FILE, "w")
-                state.write(module + "\n" + classname + "\n" + str(f['port']) + "\n" + f['address'] + "\n")
+                state.write(
+                    module + "\n" + classname + "\n" + str(f['port']) + "\n" + f['address'] + "\n")
                 state.write(inmass.name + "\n" + scripts + "\n" + intype + "\n" + out)
                 result = obj.enumerate(f)
                 if bool(result) is True:
@@ -99,16 +103,18 @@ def sectest(
                         print(result.get_result_csv())
                 state.close()
         except ImportError as e:
-            print ("no module %s or class %s ignoring" % (module,classname))
+            print ("no module %s or class %s ignoring" % (module, classname))
             continue
     delete_state_file()
+
 
 def delete_state_file():
     try:
         if os.path.isfile(NMASS_STATE_FILE):
-            os.remove(NMASS_STATE_FILE)    
+            os.remove(NMASS_STATE_FILE)
     except OSError:
         print("Could not remove nmass' state file")
+
 
 if __name__ == '__main__':
     sectest()

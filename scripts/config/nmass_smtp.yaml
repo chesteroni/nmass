@@ -1,22 +1,22 @@
 #When company possesses more than one possible email domain
 spoof:
-    "companydomain.example.com":
-        domain:  "companydomain.example.com"
-        from: "<john.doe@companydomain.example.com>"
-        to: "<jane.doe@companydomain.example.com>"
-        message: "This is spoofed SMTP message"
-        subject: "Impersonating message sent via %s"
-    "anotherdomain.example.com":
-        domain:  "anotherdomain.example.com"
-        from: "<john.doe@anotherdomain.example.com>"
-        to: "<jane.doe@anotherdomain.example.com>"
-        message: "This is spoofed SMTP message"
-        subject: "Impersonating message sent via %s"
+  "companydomain.example.com":
+    domain:  "companydomain.example.com"
+    from: "<john.doe@companydomain.example.com>"
+    to: "<jane.doe@companydomain.example.com>"
+    message: "This is spoofed SMTP message"
+    subject: "Impersonating message sent via %s"
+  "anotherdomain.example.com":
+    domain:  "anotherdomain.example.com"
+    from: "<john.doe@anotherdomain.example.com>"
+    to: "<jane.doe@anotherdomain.example.com>"
+    message: "This is spoofed SMTP message"
+    subject: "Impersonating message sent via %s"
 #When some server acts as relay, no fancy configuration is needed
 relay:
-    "example.com":
-        domain:  "example.com"
-        from: "<j@example.com>"
-        to: "<c@example.com>"
-        message: "This is spoofed SMTP message send from RELAY email"
-        subject: "Relay  message sent via %s"
+  "example.com":
+    domain:  "example.com"
+    from: "<j@example.com>"
+    to: "<c@example.com>"
+    message: "This is spoofed SMTP message send from RELAY email"
+    subject: "Relay  message sent via %s"
