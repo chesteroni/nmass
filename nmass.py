@@ -80,16 +80,17 @@ def sectest(
             continue
         module = script[0]
         classname = script[1][0].upper() + script[1][1:]
-        if len(state_content) == 8 and (
-                        state_content[0] != module or state_content[1] != classname):
-            continue;
+        state_content_size = len(state_content)
+        if state_content_size == 8 and \
+                (state_content[0] != module or state_content[1] != classname):
+            continue
+
         try:
             m = importlib.import_module(module, classname)
             obj = getattr(m, classname)()
             for f in findings:
-                if len(state_content) == 8 and (
-                                state_content[2] != str(f['port']) or state_content[3] != f[
-                            'address']):
+                if state_content_size == 8 and \
+                        (state_content[2] != str(f['port']) or state_content[3] != f['address']):
                     continue
                 state = open(NMASS_STATE_FILE, "w")
                 state.write(

@@ -16,8 +16,8 @@ class Script:
 
     def get_config(self):
         module_name = self.__module__
-        filename = os.path.dirname(
-            os.path.abspath(__file__)) + "/../config/" + module_name + ".yaml"
+        abs_path = os.path.abspath(__file__)
+        filename = os.path.dirname(abs_path) + "/../config/" + module_name + ".yaml"
         try:
             stream = open(filename, "r")
             return yaml.load(stream)

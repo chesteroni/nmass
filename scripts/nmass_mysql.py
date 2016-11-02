@@ -34,8 +34,9 @@ class Nmass_mysql(Script):
                     r.module = sys.modules[__name__]
                     r.classname = self.__class__.__name__
                     r.finding = finding
-                    r.description = "MySQL connection on user %s with password '%s', did not try further!" % (
-                        u, p)
+
+                    message = "MySQL connection on user %s with password '%s', did not try further!"
+                    r.description = message % (u, p)
                     return r
         return r
 
