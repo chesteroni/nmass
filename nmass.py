@@ -22,7 +22,11 @@ IGNORE_SAVED_HELP = "Nmass can save its state into .nmass_state file. You can di
 
 def get_file(inmass):
     if not isinstance(inmass, file):
-        fp = open(inmass)
+        try:
+            fp = open(inmass)
+        except:
+            print("Fatal error, cannot open file: " + inmass)
+            sys.exit(1)
     else:
         fp = inmass
     return fp
@@ -51,13 +55,17 @@ def sectest(
         print("Found saved state, resuming")
         f = open(NMASS_STATE_FILE)
         state_content = f.read().splitlines()
-        if state_content[4] == "<stdin>":
-            inmass = sys.stdin
+        if len(state_content) != 8:
+            print("Invalid state file, ignoring")
         else:
-            inmass = state_content[4]
-        scripts = state_content[5]
-        intype = state_content[6]
-        out = state_content[7]
+            if state_content[4] == "<stdin>":
+                inmass = sys.stdin
+            else:
+                inmass = state_content[4]
+            scripts = state_content[5]
+            intype = state_content[6]
+            out = state_content[7]
+        
 
     fp = get_file(inmass)
     f_helper = finding.Finding_helper()
