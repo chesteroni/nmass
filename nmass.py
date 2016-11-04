@@ -65,7 +65,6 @@ def sectest(
             scripts = state_content[5]
             intype = state_content[6]
             out = state_content[7]
-        
 
     fp = get_file(inmass)
     f_helper = finding.Finding_helper()
@@ -73,8 +72,8 @@ def sectest(
     scripts_to_import = get_scripts(scripts)
 
     if intype == "xml":
-        for line in fp:
-            found = f_helper.get_from_xml(line)
+        for first_line in fp:
+            found = f_helper.get_from_xml(first_line)
             if found is not None:
                 findings.append(found)
     else:
@@ -101,9 +100,14 @@ def sectest(
                         (state_content[2] != str(f['port']) or state_content[3] != f['address']):
                     continue
                 state = open(NMASS_STATE_FILE, "w")
-                state.write(
-                    module + "\n" + classname + "\n" + str(f['port']) + "\n" + f['address'] + "\n")
-                state.write(inmass.name + "\n" + scripts + "\n" + intype + "\n" + out)
+
+                first_line = \
+                    module + "\n" + classname + "\n" + str(f['port']) + "\n" + f['address'] + "\n"
+                state.write(first_line)
+
+                second_line = inmass.name + "\n" + scripts + "\n" + intype + "\n" + out
+                state.write(second_line)
+
                 result = obj.enumerate(f)
                 if bool(result) is True:
                     if out == "string":
