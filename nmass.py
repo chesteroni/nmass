@@ -72,8 +72,8 @@ def sectest(
     scripts_to_import = get_scripts(scripts)
 
     if intype == "xml":
-        for first_line in fp:
-            found = f_helper.get_from_xml(first_line)
+        for line in fp:
+            found = f_helper.get_from_xml(line)
             if found is not None:
                 findings.append(found)
     else:
