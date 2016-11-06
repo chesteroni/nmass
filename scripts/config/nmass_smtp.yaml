@@ -11,7 +11,7 @@ spoof:
         from: "<john.doe@anotherdomain.example.com>"
         to: "<jane.doe@anotherdomain.example.com>"
         message: "This is spoofed SMTP message"
-        subject: "Impersonating message sent via %s"
+subject: "Impersonating message sent via %s"
 #When some server acts as relay, no fancy configuration is needed
 relay:
     "example.com":
