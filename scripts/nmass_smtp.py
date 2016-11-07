@@ -11,7 +11,7 @@ from helpers.script import Script
 
 class Nmass_smtp(Script):
     def assess_finding(self):
-        if self.finding['port'] == 25:
+        if not self.is_finding_on_whitelist(self.finding) and self.finding['port'] == 25:
             return True
         return False
 

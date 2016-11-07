@@ -16,7 +16,7 @@ class Nmass_mysql(Script):
         self.passwords = helper.get_passwords()
 
     def assess_finding(self):
-        if self.finding['port'] in [3306, 3307]:
+        if not self.is_finding_on_whitelist(self.finding) and self.finding['port'] in [3306, 3307]:
             return True
         return False
 

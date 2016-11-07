@@ -1,0 +1,20 @@
+# Example config for whitelisting some findings
+# Each finding is first checked for being whitelisted
+# and if there is a match, no enumeration is being done
+
+# Whiteliest for module nmass_mysql
+#"nmass_mysql":
+# Every port for 127.0.0.1 will not be touched
+#    - "127.0.0.1": ~
+# Ports 3305 and 3307 on 127.0.0.2 will not be touched.
+# Other ports may however be enumerated
+#    - "127.0.0.2": "3305,3307"
+# For whatever IP in finding, ports 3333 and 6666 will not be touched for this module
+#    - "*" : "3333,6666"
+
+# Whitelist for every module (to globally exclude some hosts/ports)
+#"*":
+# No ports of 192.168.0.1 will be touched
+#    - "192.168.0.1": ~
+# For whatever IP in finding, ports 3308 and 3309 will not be touched in any module
+#    - "*": "3309,3308"
