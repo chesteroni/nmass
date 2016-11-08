@@ -77,7 +77,7 @@ def sectest(
             if found is not None:
                 findings.append(found)
     else:
-        print ("grep format is not yet supported")
+        print("grep format is not yet supported")
         sys.exit()
 
     # Main loop: for each script: for each finding: enumerate()!
@@ -105,7 +105,7 @@ def sectest(
                     module + "\n" + classname + "\n" + str(f['port']) + "\n" + f['address'] + "\n"
                 state.write(first_line)
 
-                second_line = inmass.name + "\n" + scripts + "\n" + intype + "\n" + out
+                second_line = fp.name + "\n" + scripts + "\n" + intype + "\n" + out
                 state.write(second_line)
 
                 result = obj.enumerate(f)
@@ -116,7 +116,7 @@ def sectest(
                         print(result.get_result_csv())
                 state.close()
         except ImportError as e:
-            print ("no module %s or class %s ignoring" % (module, classname))
+            print("no module %s or class %s ignoring" % (module, classname))
             continue
     delete_state_file()
 
